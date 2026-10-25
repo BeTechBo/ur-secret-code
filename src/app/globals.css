@@ -1,24 +1,124 @@
 @import "tailwindcss";
 
-@theme {
+:root {
+  /* Warm cream/tan background from UR wallet */
+  --background: #FCF8F2;
+  /* Deep forest green for text */
+  --foreground: #2E4034;
+  /* Forest green for primary accents (buttons, cards) */
+  --primary: #416047;
+  --primary-foreground: #FFFFFF;
+  /* Terracotta / Burnt Orange for secondary elements */
+  --secondary: #D97746;
+  --secondary-foreground: #FFFFFF;
+  /* Royal Gold accent for victory & celebration */
+  --gold: #E5A93C;
+  --gold-dark: #C68A24;
+  --gold-light: #FCE8B3;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-gold: var(--gold);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+body {
+  background: 
+    linear-gradient(to bottom, rgba(252, 248, 242, 0.88), rgba(252, 248, 242, 0.95)),
+    url('/images/upper_room_bg.jpg') center/cover fixed;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@utility bg-zakhrafa {
+  background-color: #FCF8F2;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 15v30M20 25h20' stroke='%23416047' stroke-width='1.5' stroke-opacity='0.07' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* Animations */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px) rotate(-1deg); }
+  40% { transform: translateX(8px) rotate(1deg); }
+  60% { transform: translateX(-6px) rotate(-0.5deg); }
+  80% { transform: translateX(6px) rotate(0.5deg); }
+}
+
+@keyframes victory-reveal {
+  0% { transform: scale(0.85) translateY(20px); opacity: 0; filter: blur(8px); }
+  60% { transform: scale(1.03) translateY(-4px); opacity: 1; filter: blur(0); }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 25px rgba(217, 119, 70, 0.3), 0 0 60px rgba(229, 169, 60, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 45px rgba(217, 119, 70, 0.5), 0 0 90px rgba(229, 169, 60, 0.45);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes golden-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes victory-burst {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-shake {
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.animate-victory-reveal {
+  animation: victory-reveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 22s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-float-gentle {
+  animation: float-gentle 4s ease-in-out infinite;
+}
+
+.animate-victory-burst {
+  animation: victory-burst 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, #D97746 0%, #E5A93C 50%, #416047 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: golden-shimmer 4s linear infinite;
 }
