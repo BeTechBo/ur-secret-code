@@ -13,31 +13,31 @@ const NEHEMIAH_VERSES = [
   {
     ar: '«لاَ تَحْزَنُوا، لأَنَّ فَرَحَ الرَّبِّ هُوَ قُوَّتُكُمْ»',
     en: '“Do not sorrow, for the joy of the LORD is your strength.”',
-    ref: 'نحميا 8: 10',
+    refAr: 'نحميا 8: 10',
     refEn: 'Nehemiah 8:10',
   },
   {
     ar: '«وَأَنْتَ إِلَهٌ غَفُورٌ وَحَنَّانٌ وَرَحِيمٌ، طَوِيلُ الرُّوحِ وَكَثِيرُ الرَّحْمَةِ، فَلَمْ تَتْرُكْهُمْ»',
     en: '“You are a God ready to pardon, gracious and merciful, slow to anger, abundant in kindness, and did not forsake them.”',
-    ref: 'نحميا 9: 17',
+    refAr: 'نحميا 9: 17',
     refEn: 'Nehemiah 9:17',
   },
   {
     ar: '«أَنْتَ هُوَ الرَّبُّ وَحْدَكَ. أَنْتَ صَنَعْتَ السَّمَاوَاتِ... وَالأَرْضَ وَكُلَّ مَا عَلَيْهَا... وَأَنْتَ تُحْيِيهَا كُلَّهَا»',
     en: '“You alone are the LORD; You have made heaven, the heaven of heavens, with all their host, the earth and everything on it... and You preserve them all.”',
-    ref: 'نحميا 9: 6',
+    refAr: 'نحميا 9: 6',
     refEn: 'Nehemiah 9:6',
   },
   {
     ar: '«فَمَضَى كُلُّ الشَّعْبِ لِيَأْكُلُوا وَيَشْرَبُوا... وَيَعْمَلُوا فَرَحًا عَظِيمًا، لأَنَّهُمْ فَهِمُوا الْكَلاَمَ الَّذِي عَلَّمُوهُمْ إِيَّاهُ»',
     en: '“And all the people went their way to eat and drink... and rejoice greatly, because they understood the words that were declared to them.”',
-    ref: 'نحميا 8: 12',
+    refAr: 'نحميا 8: 12',
     refEn: 'Nehemiah 8:12',
   },
   {
     ar: '«لأَنَّهُ كَانَ رَجُلاً أَمِينًا يَخَافُ اللهَ أَكْثَرَ مِنْ كَثِيرِينَ»',
     en: '“For he was a faithful man and feared God more than many.”',
-    ref: 'نحميا 7: 2',
+    refAr: 'نحميا 7: 2',
     refEn: 'Nehemiah 7:2',
   },
 ];
@@ -68,7 +68,7 @@ export default function SecretCodePage() {
     }
   };
 
-  const triggerFail = (msg = 'الكود غير صحيح، حاول مرة تانية') => {
+  const triggerFail = (msg = 'Incorrect code, try again') => {
     setIsError(true);
     setErrorMessage(msg);
     if (soundEnabled) playErrorBeep();
@@ -145,7 +145,7 @@ export default function SecretCodePage() {
     if (e) e.preventDefault();
     const code = cells.join('');
     if (code.length < CODE_LENGTH) {
-      triggerFail('برجاء إدخال الـ 8 أرقام كاملة');
+      triggerFail('Please enter all 8 digits');
       const emptyIdx = cells.findIndex((c) => !c);
       if (emptyIdx !== -1) inputRefs.current[emptyIdx]?.focus();
       return;
@@ -154,7 +154,7 @@ export default function SecretCodePage() {
     if (code === SECRET_CODE) {
       triggerWin();
     } else {
-      triggerFail('الكود غير صحيح، حاول مرة تانية');
+      triggerFail('Incorrect code, try again');
     }
   };
 
@@ -170,7 +170,7 @@ export default function SecretCodePage() {
 
   const handleShare = () => {
     const currentVerse = NEHEMIAH_VERSES[verseIndex];
-    navigator.clipboard.writeText(`${currentVerse.ar} (${currentVerse.ref}) — The Upper Room`);
+    navigator.clipboard.writeText(`${currentVerse.ar} (${currentVerse.refAr}) | ${currentVerse.en} (${currentVerse.refEn}) — The Upper Room`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -231,7 +231,7 @@ export default function SecretCodePage() {
               The Upper Room
             </h1>
             <p className="mt-1 text-sm text-foreground/70">
-              Enter the 8-digit secret code • أدخل الكود السري
+              Enter the 8-digit secret code
             </p>
 
             {/* Card */}
@@ -327,11 +327,11 @@ export default function SecretCodePage() {
               <div className="text-4xl sm:text-5xl mb-2">🎉</div>
 
               <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
-                إجابة صحيحة!
+                You Got It!
               </h2>
 
               <p className="text-sm text-foreground/75 mt-1 mb-5">
-                الكود السري صحيح:
+                The code was correct:
               </p>
 
               {/* Solved 8 Cells Display */}
@@ -346,11 +346,11 @@ export default function SecretCodePage() {
                 ))}
               </div>
 
-              {/* Nehemiah Verse Card */}
+              {/* Nehemiah Verse Card (Bilingual: Arabic & English) */}
               <div className="my-6 p-5 sm:p-6 rounded-2xl bg-background/90 border border-secondary/30 text-center shadow-inner relative group">
                 <div className="mb-2">
                   <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-primary/10 text-primary">
-                    آية من سفر نحميا
+                    Verse from Nehemiah
                   </span>
                 </div>
 
@@ -363,17 +363,17 @@ export default function SecretCodePage() {
                 </p>
 
                 {/* Arabic Reference */}
-                <p className="text-sm sm:text-base font-bold text-primary mt-1" dir="rtl">
-                  {currentVerse.ref}
+                <p className="text-sm sm:text-base font-bold text-primary" dir="rtl">
+                  — {currentVerse.refAr}
                 </p>
 
                 {/* English Verse */}
                 <div className="mt-4 pt-3 border-t border-secondary/20">
-                  <p className="text-xs sm:text-sm text-foreground/75 italic">
+                  <p className="text-xs sm:text-sm text-foreground/80 font-medium italic">
                     {currentVerse.en}
                   </p>
-                  <p className="text-[11px] text-foreground/50 font-medium mt-1">
-                    {currentVerse.refEn}
+                  <p className="text-[11px] text-foreground/60 font-semibold mt-1">
+                    — {currentVerse.refEn}
                   </p>
                 </div>
 
@@ -385,7 +385,7 @@ export default function SecretCodePage() {
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-secondary hover:text-secondary/80 bg-secondary/10 hover:bg-secondary/15 transition-all cursor-pointer"
                   >
                     <RefreshCw className="w-3 h-3" />
-                    <span>آية تانية من نحميا</span>
+                    <span>Next Verse</span>
                   </button>
                 </div>
               </div>
@@ -400,7 +400,7 @@ export default function SecretCodePage() {
                   }}
                   className="w-full sm:w-auto px-6 py-2.5 rounded-xl font-semibold text-sm text-white bg-primary hover:bg-primary/90 shadow-sm transition-all cursor-pointer"
                 >
-                  احتفل مرة تانية 🎆
+                  Celebrate again 🎆
                 </button>
 
                 <button
@@ -411,12 +411,12 @@ export default function SecretCodePage() {
                   {copied ? (
                     <>
                       <Check className="w-4 h-4 text-primary" />
-                      <span className="text-primary font-semibold">تم النسخ!</span>
+                      <span className="text-primary font-semibold">Copied!</span>
                     </>
                   ) : (
                     <>
                       <Share2 className="w-4 h-4 text-secondary" />
-                      <span>مشاركة الآية</span>
+                      <span>Share Verse</span>
                     </>
                   )}
                 </button>
@@ -427,14 +427,14 @@ export default function SecretCodePage() {
                   className="w-full sm:w-auto px-4 py-2.5 rounded-xl font-medium text-sm text-foreground/75 hover:text-foreground bg-foreground/5 hover:bg-foreground/10 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
-                  <span>محاولة تانية</span>
+                  <span>Try again</span>
                 </button>
               </div>
 
             </div>
 
             <p className="mt-5 text-xs text-foreground/50">
-              The Upper Room • فرح الرب هو قوتكم 🕊️
+              The Upper Room • The joy of the LORD is your strength 🕊️
             </p>
 
           </div>
